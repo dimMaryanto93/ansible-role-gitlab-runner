@@ -1,2 +1,55 @@
 ---
 # tasks file for ansible-role-gitlab-runner
+- name: Load a variable file based on the OS type
+  include_vars: "{{ lookup('first_found', params) }}"
+  vars:
+    params:
+      files:
+        - '{{ansible_os_family}}.yaml'
+      paths:
+        - 'vars'
+
+- name: Pre-requisites to install gitlab-runner
+  block: 
+    - name: Check if gitlab-runner is already installed.
+      stat: 
+        path: /usr/bin/gitlab-runner
+      register: gitlab_runner_file
+
+    - name: Get latest gitlab repository installation script
+      get_url:
+        url: "https://packages.gitlab.com/install/repositories/runner/{{ gitlab_runner_package_name }}/{{ script_name }}"
+        dest: /tmp/gitlab-runner.script.sh
+        mode: 0744
+      when: not gitlab_runner_file.stat.exists
+
+    - name: Install GitLab repository.
+      command: bash /tmp/gitlab-runner.script.sh
+      register: output
+      when: not gitlab_runner_file.stat.exists
+
+- name: Install gitlab-runner package
+  block:
+    - name: Install gitlab-runner for Redhat family
+      package:
+        name: "{{ gitlab_runner_package_name }}"
+        state: latest
+      when: ansible_os_family == 'RedHat'
+    
+    - name: Install gitlab-runner for Debian family
+      package:
+        name: "{{ gitlab_runner_package_name }}"
+        state: latest
+      environment:
+        GITLAB_RUNNER_DISABLE_SKEL: "true"
+      when:
+        - ansible_os_family == 'Debian' 
+        - ansible_distribution_release in ["buster", "focal"]
+    
+    - name: Install gitlab-runner for Debian family
+      package:
+        name: "{{ gitlab_runner_package_name }}"
+        state: latest
+      when:
+        - ansible_os_family == 'Debian' 
+        - ansible_distribution_release not in ["buster", "focal"]
