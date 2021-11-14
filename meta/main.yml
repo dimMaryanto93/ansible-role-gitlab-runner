@@ -1,7 +1,7 @@
 galaxy_info:
   role_name: gitlab_runner
   author: dimmaryanto93
-  description: Install gitlab-runner
+  description: Install gitlab-runner for linux distribution
   company: PT. Tabeldata Informatika
 
   license: license (GPL-2.0-or-later, MIT, etc)
