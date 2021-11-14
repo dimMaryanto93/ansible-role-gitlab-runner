@@ -30,27 +30,7 @@ Persiapan yang harus di lalukan, diantaranya
 Requirements
 ------------
 
-Untuk menggunakan role ini, kita membutuhkan role/collection seperti berikut:
-
-- [ansible.posix](https://github.com/ansible-collections/ansible.posix)
-- [dimmaryanto93.docker](https://github.com/dimMaryanto93/ansible-role-docker)
-
-Temen-temen bisa install, dengan cara 
-
-```bash
-ansible-galaxy collection install ansible.posix community.general && \
-ansible-galaxy role install dimmaryanto93.docker
-```
-
-Atau temen-temen bisa menggunakan `requirement.yaml` file and install menggunakan `ansible-galaxy collection install -r requirement.yaml`, dengan format seperti berikut:
-
-```yaml
----
-collections:
-  - ansible.posix
-roles:
-  - dimmaryanto93.docker
-```
+None
 
 Role Variables
 --------------
