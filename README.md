@@ -35,8 +35,7 @@ None
 Role Variables
 --------------
 
-Ada beberapa variable yang temen-temen bisa gunakan untuk setting docker daemon, untuk lebih detail bisa lihat di dokumentasi [berikut](https://github.com/dimMaryanto93/ansible-role-docker#role-variables)
-
+None
 
 Dependencies
 ------------
